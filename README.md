@@ -6,6 +6,12 @@ Donwload using git
 $ git clone https://github.com/MelDxKviel/tasky-app.git
 ```
 
+Configure .env
+
+```sh
+$ cp ./backend/example.env ./backend/.env
+```
+
 Start with build
 
 ```sh
