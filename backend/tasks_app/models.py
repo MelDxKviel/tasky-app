@@ -86,7 +86,7 @@ class Task(models.Model):
 
         if new_status == self.Status.DONE:
             for subtask in self.subtasks.all():
-                if subtask.status != self.Status.DONE:
+                if subtask.status in (self.Status.NEW, self.Status.PAUSED):
                     return False
 
         return True
@@ -94,6 +94,11 @@ class Task(models.Model):
     def change_status(self, new_status):
         if not self.can_change_status(new_status):
             raise ValidationError(f"Cannot change status from {self.status} to {new_status}")
+        
+        for subtask in self.subtasks.all():
+            if not subtask.can_change_status(new_status):
+                raise ValidationError(f"Cannot change status from {subtask.status} to {new_status} in subtask {subtask.title}")
+            subtask.change_status(new_status)
 
         self.status = new_status
         self.save()

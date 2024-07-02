@@ -80,7 +80,7 @@ class TaskUpdateSerializer(serializers.ModelSerializer):
         new_status = data.get('status', instance.status)
         if not instance.can_change_status(new_status):
             raise serializers.ValidationError({
-                'status': [f"Нельзя изменить статус задачи с {instance.status} на {new_status}"]})
+                'status': [f"Невозможно изменить статус задачи"]})
         return super().validate(data)
 
     def update(self, instance, validated_data):
