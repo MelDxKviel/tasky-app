@@ -78,8 +78,8 @@ class Task(models.Model):
         if new_status == self.Status.NEW and self.status != self.Status.NEW:
             return False
 
-        if new_status == self.Status.DONE and self.status == self.Status.IN_PROGRESS:
-            return True
+        if new_status == self.Status.DONE and self.status != self.Status.IN_PROGRESS:
+            return False
 
         if new_status == self.Status.PAUSED and self.status != self.Status.IN_PROGRESS:
             return False
